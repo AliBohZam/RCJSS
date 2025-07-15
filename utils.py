@@ -76,8 +76,8 @@ def send_ball_info(self):
     if self.is_new_ball_data():
         ball_data = self.get_new_ball_data()
         self.ball_dir = ball_data["direction"]
-        self.ball_dis = abs(0.01666666/(abs(self.ball_dir[2])/math.sqrt(1 - self.ball_dir[2]**2)))
-
+        self.ball_dis = 0.0256 * (math.sqrt(1 - self.ball_dir[2]**2) / abs(self.ball_dir[2]))
+        #print(f"{self.id} {self.ball_dis}")
         robot_x = round(self.robot_pos[0], MAX_FRACTION)
         robot_y = round(self.robot_pos[1], MAX_FRACTION)
 
@@ -95,6 +95,6 @@ def send_ball_info(self):
         data = {"id": self.id, "x": robot_x, "y": robot_y, "dx": ball_dx, "dy": ball_dy}
         packet = json.dumps(data)
         self.team_emitter.send(packet)
-        return True
+        return 1
     else:
-        return False
+        return 0
