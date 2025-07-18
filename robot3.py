@@ -52,12 +52,27 @@ class MyRobot3(RCJSoccerRobot):
                         continue
 
             if ball_data:
+                theta = 0
+                if self.ball_dir[0] > 0:
+                    if (self.heading_rad > math.pi / 2 or self.heading_rad < -math.pi / 2) and self.ball_dis < 0.25:
+                        if last_ball_x > 0:
+                            theta = -math.pi / 3
+                        else:
+                            theta = math.pi / 3
+                else:
+                    if (self.heading_rad < math.pi / 2 or self.heading_rad > -math.pi / 2) and self.ball_dis < 0.25:
+                        if last_ball_x > 0:
+                            theta = -math.pi / 3
+                        else:
+                            theta = math.pi / 3
+                ghost_ball_x = self.ball_dir[0] * math.cos(theta) - self.ball_dir[1] * math.sin(theta)
+                ghost_ball_y = self.ball_dir[0] * math.sin(theta) + self.ball_dir[1] * math.cos(theta)
+                self.ball_dir[0] = ghost_ball_x
+                self.ball_dir[1] = ghost_ball_y
+
                 direction = get_direction(self.ball_dir)
 
                 if self.ball_dir[0] > 0:
-                    if self.heading_rad > math.pi / 2 or self.heading_rad < -math.pi / 2:
-                        self.defence()
-                        continue
                     if direction == 0:
                         left_speed = SPEED_MAX
                         right_speed = SPEED_MAX
@@ -65,9 +80,6 @@ class MyRobot3(RCJSoccerRobot):
                         left_speed = direction * SPEED_MAX
                         right_speed = direction * -SPEED_MAX
                 else:
-                    if self.heading_rad < math.pi / 2 or self.heading_rad > -math.pi / 2:
-                        self.defence()
-                        continue
                     if direction == 0:
                         left_speed = -SPEED_MAX
                         right_speed = -SPEED_MAX
