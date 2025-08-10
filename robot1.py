@@ -1,5 +1,6 @@
 from utils import *
 import math
+import random
 import json
 import numpy as np
 import sys
@@ -195,8 +196,11 @@ class MyRobot1(RCJSoccerRobot):
 
             if self.name[0] == 'B':
                 target_x = ((0.8 - self.robot_pos[1]) * self.last_ball_x) / (0.8 - self.last_ball_y)
-                if abs(target_x) < 0.3:
-                    target_y = 0.5
+                if abs(target_x) < 0.25:
+                    if random.randint(1, 2) == 1:
+                        target_y = 0.5
+                    else:
+                        target_y = 0.4
                     target_rad = math.pi / 2
                 else:
                     if target_x < 0:
@@ -209,8 +213,11 @@ class MyRobot1(RCJSoccerRobot):
                     head_to(self, target_rad)
             else:
                 target_x = ((0.8 + self.robot_pos[1]) * self.last_ball_x) / (0.8 + self.last_ball_y)
-                if abs(target_x) < 0.3:
-                    target_y = -0.5
+                if abs(target_x) < 0.25:
+                    if random.randint(1, 2) == 1:
+                        target_y = -0.5
+                    else:
+                        target_y = -0.4
                     target_rad = math.pi / 2
                 else:
                     if target_x < 0:
