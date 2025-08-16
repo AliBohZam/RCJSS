@@ -1,5 +1,6 @@
 from utils import *
 import math
+import random
 import json
 from rcj_soccer_robot import RCJSoccerRobot, TIME_STEP
 
@@ -7,11 +8,19 @@ class MyRobot3(RCJSoccerRobot):
 
     def defence(self):
         if self.name[0] == 'B':
-            if goto_xy(self, -0.35, 0.35):
-                head_to(self, -math.pi / 6)
+            if random.randint(1, 2) == 1:
+                if goto_xy(self, -0.35, 0.35):
+                    head_to(self, -math.pi / 6)
+            else:
+                if goto_xy(self, -0.45, 0.45):
+                    head_to(self, -math.pi / 6)
         else:
-            if goto_xy(self, -0.35, -0.35):
-                head_to(self, math.pi / 6)
+            if random.randint(1, 2) == 1:
+                if goto_xy(self, -0.35, -0.35):
+                    head_to(self, math.pi / 6)
+            else:
+                if goto_xy(self, -0.45, -0.45):
+                    head_to(self, math.pi / 6)
 
     def run(self):
 
@@ -53,18 +62,30 @@ class MyRobot3(RCJSoccerRobot):
 
             if ball_data:
                 theta = 0
-                if self.ball_dir[0] > 0:
-                    if (self.heading_rad > math.pi / 2 or self.heading_rad < -math.pi / 2) and self.ball_dis < 0.25:
+                if self.ball_dir[0] > 0.075:
+                    if abs(self.heading_rad) > math.pi / 2 and self.ball_dis < 0.25:
                         if last_ball_x > 0:
-                            theta = -math.pi / 3
+                            if self.name[0] == 'B':
+                                theta = math.pi / 3
+                            else:
+                                theta = -math.pi / 3
                         else:
-                            theta = math.pi / 3
-                else:
-                    if (self.heading_rad < math.pi / 2 or self.heading_rad > -math.pi / 2) and self.ball_dis < 0.25:
+                            if self.name[0] == 'B':
+                                theta = -math.pi / 3
+                            else:
+                                theta = math.pi / 3
+                elif self.ball_dir[0] < -0.075:
+                    if abs(self.heading_rad) < math.pi / 2 and self.ball_dis < 0.25:
                         if last_ball_x > 0:
-                            theta = -math.pi / 3
+                            if self.name[0] == 'B':
+                                theta = math.pi / 3
+                            else:
+                                theta = -math.pi / 3
                         else:
-                            theta = math.pi / 3
+                            if self.name[0] == 'B':
+                                theta = -math.pi / 3
+                            else:
+                                theta = math.pi / 3
                 ghost_ball_x = self.ball_dir[0] * math.cos(theta) - self.ball_dir[1] * math.sin(theta)
                 ghost_ball_y = self.ball_dir[0] * math.sin(theta) + self.ball_dir[1] * math.cos(theta)
                 self.ball_dir[0] = ghost_ball_x
