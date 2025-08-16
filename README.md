@@ -1,2 +1,2 @@
 # RCJSS
-RCJ Soccer Sim Ghost Players
+RCJ Soccer Sim Ghost Team
