@@ -70,11 +70,11 @@ class MyRobot1(RCJSoccerRobot):
                     self.last_ball_x = self.prev_last_ball_x + self.last_ball_dx
                     self.last_ball_y = self.prev_last_ball_y + self.last_ball_dy
                     if abs(self.last_ball_x) > 0.65:
-                        self.last_ball_dx = -self.last_ball_dx / 1.2
-                        self.last_ball_dy = self.last_ball_dy / 1.2
+                        self.last_ball_dx = -self.last_ball_dx / 2
+                        self.last_ball_dy = self.last_ball_dy / 2
                     if abs(self.last_ball_y) > 0.75:
-                        self.last_ball_dx = self.last_ball_dx / 1.2
-                        self.last_ball_dy = -self.last_ball_dy / 1.2
+                        self.last_ball_dx = self.last_ball_dx / 2
+                        self.last_ball_dy = -self.last_ball_dy / 2
                     return
 
         try:
